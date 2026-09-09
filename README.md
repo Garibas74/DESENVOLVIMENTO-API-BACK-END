@@ -1,6 +1,8 @@
-# 📚 StudyManager API
+# StudyManager API
 
-API RESTful para gerenciamento de usuários, cursos e matrículas, desenvolvida com **FastAPI + SQLAlchemy 2 + SQLite**, com separação de camadas e respostas JSON padronizadas.
+Atividade avaliativa da disciplina de Desenvolvimento API Back-end — UniEVANGÉLICA.
+
+O projeto consiste em uma API RESTful para gerenciamento de usuários, cursos e matrículas. Foram utilizados FastAPI, SQLAlchemy e SQLite, com separação de camadas e respostas JSON padronizadas.
 
 ## Executar
 
@@ -128,27 +130,46 @@ A consulta retorna `data.user` com os dados do usuário e `data.courses` com seu
 
 ## Testes
 
+### Testes automatizados
+
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
 Os testes usam SQLite em memória isolado por teste, sem alterar o banco local. Cobrem CRUD, unicidade, validações, recursos inexistentes, relacionamento, cascata, constraints do banco, paginação, erros HTTP, proteção de detalhes internos e OpenAPI.
 
-## Entrega no GitHub
+### Teste manual pelo Swagger
 
-Repositório da atividade: [DESENVOLVIMENTO-API-BACK-END](https://github.com/Garibas74/DESENVOLVIMENTO-API-BACK-END).
+Com o servidor em execução, abra `http://127.0.0.1:8000/docs`. Para enviar uma requisição, expanda o endpoint, clique em **Try it out**, preencha os dados e clique em **Execute**.
 
-Crie um repositório vazio no GitHub e execute os comandos abaixo, substituindo `SEU_USUARIO` pelo seu usuário:
+1. Cadastre um usuário em `POST /users`:
 
-```powershell
-git init -b main
-git add .
-git commit -m "Implementa StudyManager API"
-git remote add origin https://github.com/SEU_USUARIO/studymanager-api.git
-git push -u origin main
+```json
+{"name": "Ana", "email": "ana@example.com"}
 ```
 
-O endereço do repositório será o link de entrega. O `.gitignore` exclui banco local, ambiente virtual e segredos. O arquivo `requirements-lock.txt` registra as versões usadas na validação; `requirements.txt` define as faixas de dependências.
+2. Cadastre um curso em `POST /courses`:
+
+```json
+{"title": "Python", "description": "APIs com FastAPI", "workload": 40}
+```
+
+3. Anote os IDs retornados e use-os em `POST /enrollments`. Exemplo para IDs iguais a 1:
+
+```json
+{"user_id": 1, "course_id": 1}
+```
+
+4. Consulte `GET /users/{id}/courses` com o ID do usuário. A resposta deve conter o usuário e o curso cadastrado.
+5. Repita a matrícula: a API deve retornar **409**. Envie uma carga horária igual a zero: deve retornar **422**. Consulte um ID inexistente: deve retornar **404**.
+6. Use `PUT /users/{id}` e `PUT /courses/{id}` para atualizar os dados, enviando todos os campos editáveis. Confira as alterações com `GET`.
+7. Exclua o curso com `DELETE /courses/{id}` e consulte novamente os cursos do usuário: a lista deve estar vazia. Exclua o usuário e confira que a consulta retorna **404**.
+
+Os dados do teste manual permanecem no arquivo SQLite entre execuções. Em novos testes, use outro email ou exclua os registros anteriores. Para encerrar o servidor, pressione `Ctrl+C` no terminal.
+
+## Repositório
+
+[DESENVOLVIMENTO-API-BACK-END](https://github.com/Garibas74/DESENVOLVIMENTO-API-BACK-END)
 
 ## Referências
 
