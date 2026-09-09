@@ -20,7 +20,7 @@ No Linux/macOS, use `python3 -m venv .venv` e substitua `.\.venv\Scripts\python.
 - ReDoc: http://127.0.0.1:8000/redoc
 - OpenAPI: http://127.0.0.1:8000/openapi.json
 
-O arquivo `studymanager.db` e suas tabelas são criados automaticamente na inicialização. Para outro arquivo SQLite, configure `$env:DATABASE_URL = "sqlite:///./outro.db"` antes de iniciar. O projeto usa `create_all` para o banco inicial; alterações futuras de esquema exigem migrações (por exemplo, Alembic). Não há autenticação, conforme o escopo da atividade.
+O repositório inclui o arquivo `studymanager.db` com os dados cadastrados durante o teste manual: 1 usuário, 2 cursos e 1 matrícula. Ao executar o projeto na raiz, a API utiliza esse banco e preserva os registros existentes. Se o arquivo não existir, o banco e suas tabelas são criados automaticamente na inicialização. Para usar um banco vazio separado, configure `$env:DATABASE_URL = "sqlite:///./outro.db"` antes de iniciar. O projeto usa `create_all` para o banco inicial; alterações futuras de esquema exigem migrações (por exemplo, Alembic). Não há autenticação, conforme o escopo da atividade.
 
 ## Estrutura e justificativa
 
